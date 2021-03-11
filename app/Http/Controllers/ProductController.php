@@ -2,24 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use mysql_xdevapi\TableUpdate;
 
 class ProductController extends Controller
 {
+    /**
+     * Shows list of products.
+     */
     public function index()
     {
         return view('products.index');
     }
 
+    /**
+     * Show individual product.
+     */
     public function show(Product $product)
     {
         return view('products.show', ['product' => $product]);
     }
 
+    /**
+     * Parses uploaded xml file.
+     *
+     * @param Request $request
+     * @throws ValidationException
+     */
     public function parse(Request $request)
     {
         $request->validate([
@@ -43,10 +55,26 @@ class ProductController extends Controller
                 'title' => $productData->title,
                 'description' => $productData->description,
                 'rating' => $productData->rating,
+                'category_id' => $category ?? NULL,
                 'price' => $productData->price,
                 'inet_price' => $productData->inet_price,
                 'image' => $productData->image
             ]);
+
+            $rating = $productData->rating;
+            if (!empty($rating)) {
+
+                if ($rating <= 3) {
+                    $categoryId = 1;
+                } elseif ($rating > 3 && $rating <= 4) {
+                    $categoryId = 2;
+                } elseif ($rating > 4 && $rating <= 5) {
+                    $categoryId = 3;
+                }
+
+                $product->category_id = $categoryId;
+                $product->save();
+            }
         }
     }
 }
