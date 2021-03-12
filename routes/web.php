@@ -14,6 +14,8 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('products', [ProductController::class, 'index']);
-Route::get('product{id}', [ProductController::class, 'show']);
+Route::get('products', [ProductController::class, 'index'])->name('product.index');
+Route::get('products/create', [ProductController::class, 'create'])->name('product.create');
+Route::post('products/store', [ProductController::class, 'store'])->name('product.store');
+Route::get('product/{product:id}', [ProductController::class, 'show'])->name('product.show');
 Route::post('parse', [ProductController::class, 'parse']);

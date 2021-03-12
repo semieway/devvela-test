@@ -1,3 +1,8 @@
+.file-upload {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 label.file-xml-label {
     display: block;
     margin-bottom: 15px;
@@ -21,4 +26,41 @@ input.file-xml {
     color: black;
 }
 
+.product {
+    margin-top: 40px;
+}
 
+.product-title {
+    font-size: 20px;
+    text-align: center;
+}
+
+.product-image-show,
+.product-id-show,
+.product-rating,
+.product-category,
+.product-price,
+.product-inet-price {
+    text-align: center;
+}
+
+.product-rating {
+    margin-top: 20px;
+}
+
+.product-description {
+    margin-top: 20px;
+}
+
+header .nav-link {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.product-create-form input,
+.product-create-form textarea {
+    display: block;
+
+}.product-create-form label {
+    margin-top: 10px;
+}

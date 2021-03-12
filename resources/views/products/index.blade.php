@@ -1,5 +1,6 @@
 @extends('layout')
 
+@section('content')
 <div class="file-upload">
     {{ Form::open(['action' => 'ProductController@parse', 'method' => 'post', 'files' => true]) }}
     {{ Form::label('file', 'Upload a xml file to parse:', ['class' => 'file-xml-label']) }}
@@ -27,8 +28,8 @@
     @foreach($products as $product)
         <tr>
             <td class="product-id">{{ $product->product_id }}</td>
-            <td><img src="{{ $product->image }}" class="product-image"></td>
-            <td>{{ $product->title }}</td>
+            <td><a href="{{ route('product.show', $product->id) }}"><img src="{{ $product->image }}" class="product-image"></a></td>
+            <td><a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</a></td>
             <td class="product-description">{{ $product->description }}</td>
             <td>{{ $product->rating }}</td>
             <td>{{ $product->category->title }}</td>
@@ -38,3 +39,4 @@
     @endforeach
     </tbody>
 </table>
+@endsection
