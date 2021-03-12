@@ -8,3 +8,17 @@ input.file-xml {
     margin-bottom: 15px;
 }
 
+.product-id {
+    min-width: 100px;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+}
+
+.product-table th a {
+    color: black;
+}
+
+

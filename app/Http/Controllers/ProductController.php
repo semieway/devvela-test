@@ -15,11 +15,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.index');
+        $products = Product::sortable()->get();
+        return view('products.index', ['products' => $products]);
     }
 
     /**
      * Show individual product.
+     *
+     * @param Product $product
      */
     public function show(Product $product)
     {
