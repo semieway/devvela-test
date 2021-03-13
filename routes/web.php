@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('products', [ProductController::class, 'index'])->name('product.index');
 Route::get('products/create', [ProductController::class, 'create'])->name('product.create');
-Route::post('products/store', [ProductController::class, 'store'])->name('product.store');
+Route::get('products/upload', [ProductController::class, 'upload']);
 Route::get('product/{product:id}', [ProductController::class, 'show'])->name('product.show');
+Route::post('products/store', [ProductController::class, 'store'])->name('product.store');
 Route::post('parse', [ProductController::class, 'parse']);

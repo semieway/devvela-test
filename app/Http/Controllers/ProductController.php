@@ -35,6 +35,11 @@ class ProductController extends Controller
         return view('products.create');
     }
 
+    public function upload()
+    {
+        return view('products.upload');
+    }
+
     public function store(Request $request)
     {
         $product = Product::create($request->validate([
