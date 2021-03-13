@@ -29,4 +29,7 @@
     @endforeach
     </tbody>
 </table>
+    <div class="product-pagination">
+        {{ $products->appends(request()->except('page'))->links() }}
+    </div>
 @endsection
