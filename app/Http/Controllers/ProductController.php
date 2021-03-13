@@ -27,6 +27,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $product->views += 1;
+        $product->save();
+
         return view('products.show', ['product' => $product]);
     }
 

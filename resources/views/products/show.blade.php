@@ -3,6 +3,7 @@
 @section('content')
 <div class="product">
     <div class="product-id-show">ID: {{ $product->product_id }}</div>
+    <div class="product-views">{{ $product->views }} views</div>
     <div class="product-image-show"><img src="{{ $product->image }}"></div>
     <div class="product-title">{{ $product->title }}</div>
     <div class="product-rating">Rating: {{ $product->rating }}</div>
