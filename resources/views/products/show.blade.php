@@ -10,6 +10,10 @@
     <div class="product-price">Price: {{ $product->price }}</div>
     <div class="product-inet-price">Inet price: {{ $product->inet_price }}</div>
     <div class="product-description">{{ $product->description }}</div>
-    <div class="product-edit-link"><a href="{{ route('product.edit', ['product' => $product]) }}">Edit product</a></div>
+    <div class="btn product-edit-link"><a href="{{ route('product.edit', ['product' => $product]) }}">Edit</a></div>
+    {{ Form::open(['action' => ['ProductController@delete', 'product' => $product], 'method' => 'POST', 'class' => 'product-delete-form']) }}
+    @method('delete')
+    {{ Form::submit('Delete', ['class' => 'btn btn-danger product-delete-link', 'onclick' => "return confirm('Are you sure?')"]) }}
+    {{ Form::close() }}
 </div>
 @endsection

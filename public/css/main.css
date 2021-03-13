@@ -64,5 +64,29 @@ header .nav-link {
 }
 
 .product-edit-link {
+    display: inline-block;
     margin-top: 20px;
+    margin-right: 40px;
+}
+
+.product-edit-link a {
+    text-decoration: none;
+}
+
+.product-delete-form {
+    display: inline-block;
+}
+
+.product-delete-link {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.product-delete-link a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.product-delete-link a:hover {
+    color: #cbd5e0;
 }

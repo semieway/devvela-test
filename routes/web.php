@@ -21,5 +21,7 @@ Route::get('products/upload', [ProductController::class, 'upload'])->name('produ
 Route::get('product/{product:id}', [ProductController::class, 'show'])->name('product.show');
 Route::get('product/{product:id}/edit', [ProductController::class, 'edit'])->name('product.edit');
 Route::put('product/{product:id}', [ProductController::class, 'update'])->name('product.update');
+Route::delete('product/{product:id}', [ProductController::class, 'delete'])->name('product.delete');
 Route::post('products/store', [ProductController::class, 'store'])->name('product.store');
 Route::post('parse', [ProductController::class, 'parse']);
+Route::get('/', function () { return view('welcome'); });

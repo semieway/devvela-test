@@ -65,6 +65,17 @@ class ProductController extends Controller
         return redirect(route('product.show', ['product' => $product]));
     }
 
+    public function delete(Product $product)
+    {
+        try {
+            $product->delete();
+        } catch (\Exception $e) {
+            fail('An error occurred while deleting this item');
+        }
+
+        return redirect(route('product.index'));
+    }
+
     /**
      * Parses uploaded xml file.
      *
