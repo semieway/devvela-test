@@ -28,19 +28,11 @@ input.file-xml {
 
 .product {
     margin-top: 40px;
+    text-align: center;
 }
 
 .product-title {
     font-size: 20px;
-    text-align: center;
-}
-
-.product-image-show,
-.product-id-show,
-.product-rating,
-.product-category,
-.product-price,
-.product-inet-price {
     text-align: center;
 }
 
@@ -69,4 +61,8 @@ header .nav-link {
     margin-top: 20px;
     max-width: 300px;
     max-height: 300px;
+}
+
+.product-edit-link {
+    margin-top: 20px;
 }

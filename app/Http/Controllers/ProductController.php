@@ -30,6 +30,21 @@ class ProductController extends Controller
         return view('products.show', ['product' => $product]);
     }
 
+    public function edit(Product $product)
+    {
+        return view('products.edit', ['product' => $product]);
+    }
+
+    public function update(Product $product, Request $request)
+    {
+        $product->update($this->validateFields($request));
+        $this->setImage($product, $request);
+        $this->setRating($product, $request);
+        $product->save();
+
+        return redirect(route('product.show', ['product' => $product]));
+    }
+
     public function create()
     {
         return view('products.create');
@@ -42,22 +57,10 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $product = Product::create($request->validate([
-            'product_id' => 'required|integer',
-            'title' => ['required', 'string', new ProductTitleRule()],
-            'price' => 'required',
-            'image' => 'mimes:jpg,png,jpeg|max:2048|nullable',
-            'rating' => 'numeric|nullable',
-            'inet_price' => 'integer|nullable',
-            'description' => 'string|max:1000|nullable'
-        ]));
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image')->store('img', ['disk' => 'public_uploads']);
-
-            $product->image = Storage::disk('public_uploads')->url($image);
-            $product->save();
-        }
+        $product = Product::create($this->validateFields($request));
+        $this->setImage($product, $request);
+        $this->setRating($product, $request);
+        $product->save();
 
         return redirect(route('product.show', ['product' => $product]));
     }
@@ -87,7 +90,7 @@ class ProductController extends Controller
             $productId = (empty($productData->product_id)) ? $productId : $productData->product_id;
 
             $product = Product::create([
-               'product_id' => $productData->product_id,
+                'product_id' => $productData->product_id,
                 'title' => $productData->title,
                 'description' => $productData->description,
                 'rating' => $productData->rating,
@@ -99,18 +102,77 @@ class ProductController extends Controller
 
             $rating = $productData->rating;
             if (!empty($rating)) {
-
-                if ($rating <= 3) {
-                    $categoryId = 1;
-                } elseif ($rating > 3 && $rating <= 4) {
-                    $categoryId = 2;
-                } elseif ($rating > 4 && $rating <= 5) {
-                    $categoryId = 3;
-                }
-
-                $product->category_id = $categoryId;
+                $product->category_id = $this->getCategoryId($rating);
                 $product->save();
             }
+        }
+
+        return redirect(route('product.index'));
+    }
+
+    /**
+     * Gets category id by rating.
+     *
+     * @param $rating
+     * @return int|null
+     */
+    public function getCategoryId($rating): ?int
+    {
+        if ($rating <= 3) {
+            return 1;
+        } elseif ($rating > 3 && $rating <= 4) {
+            return 2;
+        } elseif ($rating > 4 && $rating <= 5) {
+            return 3;
+        }
+
+        return NULL;
+    }
+
+    /**
+     * Validates product fields.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function validateFields(Request $request): array
+    {
+        return $request->validate([
+            'product_id' => 'required|integer',
+            'title' => ['required', 'string', new ProductTitleRule()],
+            'price' => 'required',
+            'image' => 'mimes:jpg,png,jpeg|max:2048|nullable',
+            'rating' => 'numeric|min:0|max:5|nullable',
+            'inet_price' => 'integer|nullable',
+            'description' => 'string|max:1000|nullable'
+        ]);
+    }
+
+    /**
+     * Sets image to product.
+     *
+     * @param Product $product
+     * @param Request $request
+     */
+    public function setImage(Product $product, Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('img', ['disk' => 'public_uploads']);
+
+            $product->image = Storage::disk('public_uploads')->url($image);
+        }
+    }
+
+    /**
+     * Sets rating to product.
+     *
+     * @param Product $product
+     * @param Request $request
+     */
+    public function setRating(Product $product, Request $request)
+    {
+        if ($request->has('rating')) {
+            $product->category_id = $this->getCategoryId($request->get('rating'));
         }
     }
 }

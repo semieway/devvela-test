@@ -15,6 +15,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Main page</a>
                 <a class="nav-link" href="{{ route('product.index') }}">Products</a>
+                <a class="nav-link" href="{{ route('product.create') }}">Create</a>
+                <a class="nav-link" href="{{ route('product.upload') }}">Upload file</a>
             </li>
         </ul>
     </nav>

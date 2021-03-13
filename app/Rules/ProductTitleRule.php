@@ -25,7 +25,7 @@ class ProductTitleRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[а-я0-9\s]+$/msi', $value);
+        return preg_match('/^[а-я0-9\s]+$/msiu', $value);
     }
 
     /**
