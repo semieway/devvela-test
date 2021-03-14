@@ -16,11 +16,11 @@
     </thead>
     <tbody>
     @foreach($products as $product)
-        <tr>
+        <tr height="100px">
             <td class="product-id">{{ $product->product_id }}</td>
             <td><a href="{{ route('product.show', $product->id) }}"><img src="{{ $product->image }}" class="product-image"></a></td>
             <td><a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</a></td>
-            <td class="product-description">{{ $product->description }}</td>
+            <td class="product-description">{{ Str::words($product->description, 30) }}</td>
             <td>{{ $product->rating ?? '' }}</td>
             <td>{{ $product->category->title ?? '' }}</td>
             <td>{{ $product->price }}</td>
