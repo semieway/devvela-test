@@ -104,3 +104,7 @@ header .nav-link {
 #chart {
     margin: 40px auto 0;
 }
+
+.form-error {
+    color: crimson;
+}
