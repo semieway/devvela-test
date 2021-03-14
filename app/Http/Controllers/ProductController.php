@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Rules\ProductTitleRule;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
@@ -16,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::sortable()->paginate(20);
+        $products = Product::sortable()->orderBy('created_at', 'desc')->paginate(20);
         return view('products.index', ['products' => $products]);
     }
 
@@ -29,6 +30,11 @@ class ProductController extends Controller
     {
         $product->views += 1;
         $product->save();
+
+        DB::table('product_views')->insert([
+           'product_id' => $product->id,
+            'created_at' => now()
+        ]);
 
         return view('products.show', ['product' => $product]);
     }
@@ -122,6 +128,33 @@ class ProductController extends Controller
         }
 
         return redirect(route('product.index'));
+    }
+
+    /**
+     * Shows all product views by minute.
+     */
+    public function viewsChart()
+    {
+        $views = DB::select("
+        SELECT
+        TIMESTAMP WITH TIME ZONE 'epoch' +
+        INTERVAL '1 second' * round(extract('epoch' from created_at) / 60) * 60 as timestamp,
+            count(product_id)
+        FROM
+            product_views
+        WHERE
+            created_at BETWEEN NOW() - INTERVAL '1 HOUR' AND NOW()
+        GROUP BY
+            round(extract('epoch' from created_at) / 60)
+        ORDER BY timestamp
+            ");
+        $viewsArray = [];
+
+        foreach ($views as $view) {
+            $viewsArray[] = [$view->timestamp, $view->count];
+        }
+
+        return view('products.chart', ['views' => $viewsArray]);
     }
 
     /**

@@ -24,4 +24,5 @@ Route::put('product/{product:id}', [ProductController::class, 'update'])->name('
 Route::delete('product/{product:id}', [ProductController::class, 'delete'])->name('product.delete');
 Route::post('products/store', [ProductController::class, 'store'])->name('product.store');
 Route::post('parse', [ProductController::class, 'parse']);
+Route::get('products/chart', [ProductController::class, 'viewsChart'])->name('product.viewsChart');
 Route::get('/', function () { return view('welcome'); });

@@ -18,6 +18,7 @@
                 <a class="nav-link" href="{{ route('product.index') }}">Products</a>
                 <a class="nav-link" href="{{ route('product.create') }}">Create</a>
                 <a class="nav-link" href="{{ route('product.upload') }}">Upload file</a>
+                <a class="nav-link" href="{{ route('product.viewsChart') }}">Views Chart</a>
             </li>
         </ul>
     </nav>
